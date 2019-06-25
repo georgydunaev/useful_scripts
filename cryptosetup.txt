@@ -66,3 +66,17 @@ https://www.kernel.org/doc/Documentation/power/runtime_pm.txt
 
 /sys/bus/usb/devices/usb4/power/runtime_status
 
+It is possible to power on the disk by restarting (as root) a driver xhci_hcd:
+echo -n "0000:00:14.0" | tee /sys/bus/pci/drivers/xhci_hcd/unbind 
+&&
+sleep 5
+&&
+echo -n "0000:00:14.0" | tee /sys/bus/pci/drivers/xhci_hcd/bind
+
+To determine which driver has to be restarted: lsusb -t .
+
+repeat switching off for all names (like "0000:00:14.0") from /sys/bus/pci/drivers/xhci_hcd/
+
+
+
+
