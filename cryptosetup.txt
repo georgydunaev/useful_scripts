@@ -4,6 +4,7 @@ $ su root
 $ visudo 
 user = (ALL:ALL) ALL
 log out & log in
+$ exit
 
 "
 sudo apt-get install cryptsetup
@@ -37,9 +38,31 @@ $ umount /data
  lvchange -an /dev/vg_name/lv_name 
  OR 
  vgchange -an vg_name
- 
-3c) Power off 
+
+3c) Closing LUKS
+sudo cryptsetup luksClose DATOS
+
+
+3d) Power off 
+ls /media/georgy/
+sudo umount /media/georgy/dec61a2b-18bf-42c9-a2c9-a026176785d2/
+ls /media/georgy/
+
 sudo blkid
 (to get UUID)
+ sudo apt-get install hdparm
 sudo hdparm -Y /dev/disk/by-uuid/DEVICE-IDENT-HERE
+OR
+sync
+echo 1 > /sys/block/sdc/device/delete
+OR
+udisksctl power-off -b /dev/sdb
+
+How to power on?
+
+https://serverfault.com/questions/93783/make-a-hard-disk-sleep-and-only-wake-up-when-needed
+https://askubuntu.com/questions/342061/power-on-off-usb-ports
+https://www.kernel.org/doc/Documentation/power/runtime_pm.txt
+
+/sys/bus/usb/devices/usb4/power/runtime_status
 
