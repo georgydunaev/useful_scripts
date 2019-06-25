@@ -1,0 +1,45 @@
+1) For freshly installed system:
+
+$ su root
+$ visudo 
+user = (ALL:ALL) ALL
+log out & log in
+
+"
+sudo apt-get install cryptsetup
+sudo apt-get install lvm2
+"
+
+2) For mounting of the external disks
+"
+sudo cryptsetup luksOpen /dev/sdb5 DATOS
+sudo lvscan
+  inactive          '/dev/debian2018-vg/root' [459.62 GiB] inherit
+  inactive          '/dev/debian2018-vg/swap_1' [5.89 GiB] inherit
+sudo lvchange -ay /dev/debian2018-vg/root
+sudo lvscan
+  ACTIVE            '/dev/debian2018-vg/root' [459.62 GiB] inherit
+  inactive          '/dev/debian2018-vg/swap_1' [5.89 GiB] inherit
+"
+
+mkfolder /mnt/DATOS
+sudo mount /dev/debian2018-vg/root /mnt/DATOS
+
+3) For unmounting
+
+3a) Unmount filesystem
+Run umount command with disk name or mount point name to unmount currently mounted disk.
+$ umount /dev/sdb
+OR
+$ umount /data
+
+3b) Inactivation
+ lvchange -an /dev/vg_name/lv_name 
+ OR 
+ vgchange -an vg_name
+ 
+3c) Power off 
+sudo blkid
+(to get UUID)
+sudo hdparm -Y /dev/disk/by-uuid/DEVICE-IDENT-HERE
+
