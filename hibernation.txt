@@ -1,0 +1,2 @@
+sudo pm-hibernate
+http://www.linuxandubuntu.com/home/how-to-enable-hibernate-in-ubuntu-linux
